@@ -1539,7 +1539,6 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 								bottom: 14,
 								left: 22,
 								right: 47, // (54 + 9) + 4 extra padding
-								zIndex: 2,
 							}}
 						/>
 					)}
@@ -1606,7 +1605,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 								height: "100%",
 								zIndex: 6,
 							}}>
-							<Tooltip tipText="Add Context" style={{ left: 0 }}>
+							<Tooltip tipText="添加上下文" style={{ left: 0, whiteSpace: "normal", minWidth: 60 }}>
 								<VSCodeButton
 									data-testid="context-button"
 									appearance="icon"
@@ -1621,7 +1620,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 								</VSCodeButton>
 							</Tooltip>
 
-							<Tooltip tipText="Add Images">
+							<Tooltip tipText="添加图片" style={{ left: 0, whiteSpace: "normal", minWidth: 50 }}>
 								<VSCodeButton
 									data-testid="images-button"
 									appearance="icon"
@@ -1649,7 +1648,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 										role="button"
 										isActive={showModelSelector}
 										disabled={false}
-										title="Select Model / API Provider"
+										title="选择模型/API提供商"
 										onClick={handleModelButtonClick}
 										tabIndex={0}>
 										<ModelButtonContent>{modelDisplayName}</ModelButtonContent>
@@ -1678,7 +1677,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 					<Tooltip
 						style={{ zIndex: 1000 }}
 						visible={shownTooltipMode !== null}
-						tipText={`In ${shownTooltipMode === "act" ? "Act" : "Plan"}  mode, Cline will ${shownTooltipMode === "act" ? "complete the task immediately" : "gather information to architect a plan"}`}
+						tipText={`在 ${shownTooltipMode === "act" ? "Act" : "Plan"}  模式下, IIE助手会${shownTooltipMode === "act" ? "立刻执行任务" : "收集信息来制定计划"}`}
 						hintText={`Toggle w/ ${metaKeyChar}+Shift+A`}>
 						<SwitchContainer data-testid="mode-switch" disabled={false} onClick={onModeToggle}>
 							<Slider isAct={chatSettings.mode === "act"} isPlan={chatSettings.mode === "plan"} />

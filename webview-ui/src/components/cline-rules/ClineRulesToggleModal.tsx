@@ -106,7 +106,10 @@ const ClineRulesToggleModal: React.FC = () => {
 	return (
 		<div ref={modalRef}>
 			<div ref={buttonRef} className="inline-flex min-w-0 max-w-full">
-				<Tooltip tipText="Manage Cline Rules & Workflows" visible={isVisible ? false : undefined}>
+				<Tooltip
+					tipText="管理自定义规则与工作流"
+					style={{ left: 0, whiteSpace: "normal", minWidth: 80 }}
+					visible={isVisible ? false : undefined}>
 					<VSCodeButton
 						appearance="icon"
 						aria-label="Cline Rules"
@@ -154,10 +157,10 @@ const ClineRulesToggleModal: React.FC = () => {
 								borderBottom: "1px solid var(--vscode-panel-border)",
 							}}>
 							<TabButton isActive={currentView === "rules"} onClick={() => setCurrentView("rules")}>
-								Rules
+								规则
 							</TabButton>
 							<TabButton isActive={currentView === "workflows"} onClick={() => setCurrentView("workflows")}>
-								Workflows
+								工作流
 							</TabButton>
 						</div>
 					</div>
@@ -166,19 +169,18 @@ const ClineRulesToggleModal: React.FC = () => {
 					<div className="text-xs text-[var(--vscode-descriptionForeground)] mb-4">
 						{currentView === "rules" ? (
 							<p>
-								Rules allow you to provide Cline with system-level guidance. Think of them as a persistent way to
-								include context and preferences for your projects or globally for every conversation.
+								规则允许你为IIE
+								Assistant提供系统级指导。这是一种持久性的设置，用于为你的项目或每次对话全局性地添加上下文和偏好设置。
 							</p>
 						) : (
 							<p>
-								Workflows allow you to define a series of steps to guide Cline through a repetitive set of tasks,
-								such as deploying a service or submitting a PR. To invoke a workflow, type{" "}
+								工作流允许你定义一系列步骤，引导IIE
+								Assistant完成一组重复性的任务，例如部署服务或提交拉取请求（PR）。要调用一个工作流，请在对话框中输入{" "}
 								<span
 									className=" 
 								text-[var(--vscode-foreground)] font-bold">
 									/workflow-name
 								</span>{" "}
-								in the chat.
 							</p>
 						)}
 					</div>
@@ -187,7 +189,7 @@ const ClineRulesToggleModal: React.FC = () => {
 						<>
 							{/* Global Rules Section */}
 							<div className="mb-3">
-								<div className="text-sm font-normal mb-2">Global Rules</div>
+								<div className="text-sm font-normal mb-2">全局规则</div>
 								<RulesToggleList
 									rules={globalRules}
 									toggleRule={(rulePath, enabled) => toggleRule(true, rulePath, enabled)}
@@ -201,7 +203,7 @@ const ClineRulesToggleModal: React.FC = () => {
 
 							{/* Local Rules Section */}
 							<div style={{ marginBottom: -10 }}>
-								<div className="text-sm font-normal mb-2">Workspace Rules</div>
+								<div className="text-sm font-normal mb-2">工作区规则</div>
 								<RulesToggleList
 									rules={localRules}
 									toggleRule={(rulePath, enabled) => toggleRule(false, rulePath, enabled)}
@@ -234,7 +236,7 @@ const ClineRulesToggleModal: React.FC = () => {
 					) : (
 						/* Workflows section */
 						<div style={{ marginBottom: -10 }}>
-							<div className="text-sm font-normal mb-2">Workspace Workflows</div>
+							<div className="text-sm font-normal mb-2">工作区工作流</div>
 							<RulesToggleList
 								rules={workflows}
 								toggleRule={toggleWorkflow}

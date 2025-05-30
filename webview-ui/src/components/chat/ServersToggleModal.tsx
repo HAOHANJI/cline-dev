@@ -44,7 +44,10 @@ const ServersToggleModal: React.FC = () => {
 	return (
 		<div ref={modalRef}>
 			<div ref={buttonRef} className="inline-flex min-w-0 max-w-full">
-				<Tooltip tipText="Manage MCP Servers" visible={isVisible ? false : undefined}>
+				<Tooltip
+					tipText="管理MCP服务器"
+					style={{ left: 0, whiteSpace: "normal", minWidth: 50 }}
+					visible={isVisible ? false : undefined}>
 					<VSCodeButton
 						appearance="icon"
 						aria-label="MCP Servers"

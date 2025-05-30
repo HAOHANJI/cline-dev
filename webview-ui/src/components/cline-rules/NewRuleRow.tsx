@@ -101,8 +101,8 @@ const NewRuleRow: React.FC<NewRuleRowProps> = ({ isGlobal, ruleType }) => {
 							type="text"
 							placeholder={
 								ruleType === "workflow"
-									? "workflow-name (.md, .txt, or no extension)"
-									: "rule-name (.md, .txt, or no extension)"
+									? "工作流名称 (.md, .txt, or no extension)"
+									: "规则名称 (.md, .txt, or no extension)"
 							}
 							value={filename}
 							onChange={(e) => setFilename(e.target.value)}
@@ -127,7 +127,7 @@ const NewRuleRow: React.FC<NewRuleRowProps> = ({ isGlobal, ruleType }) => {
 				) : (
 					<>
 						<span className="flex-1 text-[var(--vscode-descriptionForeground)] bg-[var(--vscode-input-background)] italic text-xs">
-							{ruleType === "workflow" ? "New workflow file..." : "New rule file..."}
+							{ruleType === "workflow" ? "新工作流文件..." : "新规则文件..."}
 						</span>
 						<div className="flex items-center ml-2 space-x-2">
 							<VSCodeButton

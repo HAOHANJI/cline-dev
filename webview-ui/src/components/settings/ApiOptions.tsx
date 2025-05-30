@@ -295,7 +295,7 @@ const ApiOptions = ({
 		<div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: isPopup ? -10 : 0 }}>
 			<DropdownContainer className="dropdown-container">
 				<label htmlFor="api-provider">
-					<span style={{ fontWeight: 500 }}>API Provider</span>
+					<span style={{ fontWeight: 500 }}>API提供商</span>
 				</label>
 				<VSCodeDropdown
 					id="api-provider"
