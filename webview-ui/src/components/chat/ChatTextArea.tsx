@@ -1325,6 +1325,28 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 			)
 		}
 
+		// C编译器选择相关状态
+		// 当前选中的C编译器（gcc/clang）
+		const [currentCompiler, setCurrentCompiler] = useState<string>("gcc")
+		// 控制下拉菜单显示/隐藏
+		const [showCompilerMenu, setShowCompilerMenu] = useState(false)
+		// 按钮ref用于点击外部关闭下拉菜单
+		const compilerButtonRef = useRef<HTMLDivElement>(null)
+		// 可选的C编译器列表
+		const compilerOptions = ["gcc", "clang"]
+
+		// 监听点击外部关闭下拉菜单
+		useEffect(() => {
+			if (!showCompilerMenu) return
+			const handleClickOutside = (event: MouseEvent) => {
+				if (compilerButtonRef.current && !compilerButtonRef.current.contains(event.target as Node)) {
+					setShowCompilerMenu(false)
+				}
+			}
+			document.addEventListener("mousedown", handleClickOutside)
+			return () => document.removeEventListener("mousedown", handleClickOutside)
+		}, [showCompilerMenu])
+
 		return (
 			<div>
 				<div
@@ -1605,6 +1627,73 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 								height: "100%",
 								zIndex: 6,
 							}}>
+							{/* C编译器选择按钮（UI风格与其他按钮一致，左侧第一个，带Tooltip，下拉菜单，选中高亮，菜单弹出时Tooltip强制隐藏）
+								- Tooltip 只在悬停时显示，菜单弹出时隐藏，行为与“添加上下文”“添加图片”按钮一致
+								- 按钮显示当前编译器，点击弹出下拉菜单，选项有gcc/clang，选中后按钮文字变化
+								- 下拉菜单UI：背景色、边框、圆角、阴影、选中项高亮，zIndex高于Tooltip
+								- 交互：点击外部关闭菜单，选项点击后菜单关闭，Tooltip不残留
+							*/}
+							<Tooltip
+								tipText="选择C编译器"
+								style={{ left: 0, whiteSpace: "normal", minWidth: 80 }}
+								visible={showCompilerMenu ? false : undefined} // 仅在菜单弹出时强制隐藏Tooltip，其余交给Tooltip自身hover逻辑
+							>
+								<div
+									ref={compilerButtonRef}
+									style={{ display: "inline-block", position: "relative", marginRight: 6 }}>
+									{/* 主按钮，显示当前C编译器，点击后弹出下拉菜单 */}
+									<VSCodeButton
+										appearance="icon"
+										aria-label="C编译器选择"
+										style={{ padding: "0px 8px", height: "20px", minWidth: 90 }}
+										onClick={() => setShowCompilerMenu((v) => !v)}>
+										<ButtonContainer>
+											<span style={{ fontSize: "13px" }}>C编译器：{currentCompiler}</span>
+										</ButtonContainer>
+									</VSCodeButton>
+									{/* 下拉菜单，显示所有可选编译器，选中项高亮，菜单样式与VSCode风格一致 */}
+									{showCompilerMenu && (
+										<div
+											style={{
+												position: "absolute",
+												bottom: "110%",
+												left: 0,
+												background: "var(--vscode-editor-background)",
+												border: "1px solid var(--vscode-input-border)",
+												borderRadius: 4,
+												boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+												zIndex: 100,
+												minWidth: 90,
+												padding: "2px 0",
+											}}>
+											{compilerOptions.map((opt) => (
+												<div
+													key={opt}
+													style={{
+														padding: "4px 12px",
+														cursor: "pointer",
+														background:
+															opt === currentCompiler
+																? "var(--vscode-list-activeSelectionBackground)"
+																: "transparent",
+														color:
+															opt === currentCompiler
+																? "var(--vscode-list-activeSelectionForeground)"
+																: "var(--vscode-editor-foreground)",
+														fontWeight: opt === currentCompiler ? 600 : 400,
+													}}
+													onClick={() => {
+														setCurrentCompiler(opt)
+														setShowCompilerMenu(false)
+													}}>
+													{opt}
+												</div>
+											))}
+										</div>
+									)}
+								</div>
+							</Tooltip>
+
 							<Tooltip tipText="添加上下文" style={{ left: 0, whiteSpace: "normal", minWidth: 60 }}>
 								<VSCodeButton
 									data-testid="context-button"
